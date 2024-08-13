@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\GajiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +51,20 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
         'update' => 'owner.update',
         'destroy' => 'owner.destroy',
     ]);
+    Route::resource('/stok', Controllers\StokController::class)->names([
+        'index' => 'stok.index',
+        'create' => 'stok.create',
+        'store' => 'stok.store',
+        'show' => 'stok.show',
+        'edit' => 'stok.edit',
+        'update' => 'stok.update',
+        'destroy' => 'stok.destroy',
+    ]);
+    Route::get('/gaji/karyawan', [Controllers\GajiController::class, 'karyawan'])->name('gaji.karyawan');
+    Route::get('/gaji/operator', [Controllers\GajiController::class, 'operator'])->name('gaji.operator');
+    Route::post('/gaji', [Controllers\GajiController::class, 'store'])->name('gaji.store');
+    Route::get('/gaji/{gaji}/edit', [Controllers\GajiController::class, 'edit'])->name('gaji.edit');
+    Route::delete('/gaji/{gaji}', [Controllers\GajiController::class, 'destroy'])->name('gaji.destroy');
 });
 
 require __DIR__.'/auth.php';

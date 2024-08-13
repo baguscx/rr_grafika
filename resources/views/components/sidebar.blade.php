@@ -2,15 +2,40 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Menu Utama</div>
-                            <a class="nav-link" href="{{route('transaksi.index')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Transaksi
-                            </a>
+                            @if(Auth::user()->hasRole('admin'))
+                                <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Dashboard
+                                </a>
+                                <div class="sb-sidenav-menu-heading">Menu Utama</div>
+                                <a class="nav-link" href="{{route('transaksi.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Transaksi
+                                </a>
+                            @elseif(Auth::user()->hasRole('owner'))
+                                <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Dashboard
+                                </a>
+                                <div class="sb-sidenav-menu-heading">Menu Utama</div>
+                                <a class="nav-link" href="{{route('stok.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Stok
+                                </a>
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dropdownCollapse" aria-expanded="false" aria-controls="dropdownCollapse">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-angle-down"></i></div>
+                                    Penggajian
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="dropdownCollapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                      <a class="nav-link" href="{{route('gaji.karyawan')}}">Karyawan</a>
+                                      <a class="nav-link" href="{{route('gaji.operator')}}">Operator</a>
+                                    </nav>
+                                </div>
+                            @endif
+
+
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">

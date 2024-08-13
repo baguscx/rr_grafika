@@ -13,7 +13,8 @@ class StokController extends Controller
      */
     public function index()
     {
-        //
+        $stoks = Stok::latest()->get();
+        return view('owner.stok.index', compact('stoks'));
     }
 
     /**
@@ -29,7 +30,17 @@ class StokController extends Controller
      */
     public function store(Request $request)
     {
+        Stok::create([
+            'nama_barang' => $request->namaBarang,
+            'jumlah_barang' => $request->jumlahBarang,
+            'harga_barang' => $request->hargaBarang,
+            'total_harga' => $request->jumlahBarang * $request->hargaBarang,
+            'barang_keluar' => 0,
+            'barang_masuk' => $request->jumlahBarang,
+            'barang_tersedia' => $request->jumlahBarang
+        ]);
 
+        return redirect()->route('stok.index');
     }
 
     /**
@@ -45,7 +56,14 @@ class StokController extends Controller
      */
     public function edit(Stok $stok)
     {
-        //
+        $dataPage = [
+            'title' => 'Edit stok',
+            'description' => 'Edit data stok',
+            'button' => 'Update',
+            'method' => 'PATCH',
+            'url' => route('stok.update', $stok),
+        ];
+        return view('owner.stok.form', compact('stok', 'dataPage'));
     }
 
     /**
@@ -53,7 +71,17 @@ class StokController extends Controller
      */
     public function update(Request $request, Stok $stok)
     {
-        //
+        $stok->update([
+            'nama_barang' => $request->nama_barang,
+            'jumlah_barang' => $request->jumlah_barang,
+            'harga_barang' => $request->harga_barang,
+            'total_harga' => ($request->jumlah_barang - $request->barang_keluar) * $request->harga_barang,
+            'barang_keluar' => $request->barang_keluar,
+            'barang_masuk' => $request->jumlah_barang,
+            'barang_tersedia' => $request->jumlah_barang - $request->barang_keluar
+        ]);
+
+        return redirect()->route('stok.index');
     }
 
     /**
@@ -61,6 +89,7 @@ class StokController extends Controller
      */
     public function destroy(Stok $stok)
     {
-        //
+        $stok->delete();
+        return redirect()->route('stok.index');
     }
 }

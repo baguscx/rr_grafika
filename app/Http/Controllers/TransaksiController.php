@@ -50,7 +50,14 @@ class TransaksiController extends Controller
      */
     public function edit(Transaksi $transaksi)
     {
-        //
+        $dataPage = [
+            'title' => 'Edit Transaksi',
+            'description' => 'Edit data transaksi',
+            'button' => 'Update',
+            'method' => 'PATCH',
+            'url' => route('transaksi.update', $transaksi),
+        ];
+        return view('transaksi.form', compact('transaksi', 'dataPage'));
     }
 
     /**
@@ -58,7 +65,12 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
-        //
+        $transaksi->update([
+            'pemasukan' => $request->pemasukan,
+            'pengeluaran' => $request->pengeluaran
+        ]);
+
+        return redirect()->route('transaksi.index');
     }
 
     /**

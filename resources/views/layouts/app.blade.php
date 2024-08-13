@@ -13,11 +13,18 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Pemasukan</title>
+        <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        <link href="{{url('https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" crossorigin="anonymous" />
+        <script src="{{url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js')}}" crossorigin="anonymous"></script>
+    </head>
+    <body class="font-sans antialiased sb-nav-fixed">
+        <x-navbar></x-navbar>
+        <div class="min-h-screen bg-gray-100">
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow">
@@ -32,5 +39,12 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script src="{{url('https://code.jquery.com/jquery-3.5.1.slim.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{url('https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{asset('js/scripts.js')}}""></script>
+        <script src="{{url('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{url('https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{asset("assets/demo/datatables-demo.js")}}""></script>
     </body>
 </html>
