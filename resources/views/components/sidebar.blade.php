@@ -3,14 +3,29 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             @if(Auth::user()->hasRole('admin'))
-                                <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
+                                {{-- <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Dashboard
-                                </a>
+                                </a> --}}
                                 <div class="sb-sidenav-menu-heading">Menu Utama</div>
-                                <a class="nav-link" href="{{route('transaksi.index')}}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <a class="nav-link" href="{{route('barang.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                                    Data Barang
+                                </a>
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dropdownCollapse" aria-expanded="false" aria-controls="dropdownCollapse">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-angle-down"></i></div>
                                     Transaksi
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="dropdownCollapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                      <a class="nav-link" href="{{route('transaksi.pemasukan')}}">Pemasukan</a>
+                                      <a class="nav-link" href="{{route('transaksi.pengeluaran')}}">Pengeluaran</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link" href="{{route('transaksi.laporan')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                                    Laporan
                                 </a>
                             @elseif(Auth::user()->hasRole('owner'))
                                 <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
@@ -18,21 +33,14 @@
                                     Dashboard
                                 </a>
                                 <div class="sb-sidenav-menu-heading">Menu Utama</div>
-                                <a class="nav-link" href="{{route('stok.index')}}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    Stok
-                                </a>
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dropdownCollapse" aria-expanded="false" aria-controls="dropdownCollapse">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-angle-down"></i></div>
+                                <a class="nav-link" href="{{route('gaji')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                                     Penggajian
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="dropdownCollapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                      <a class="nav-link" href="{{route('gaji.karyawan')}}">Karyawan</a>
-                                      <a class="nav-link" href="{{route('gaji.operator')}}">Operator</a>
-                                    </nav>
-                                </div>
+                                <a class="nav-link" href="{{route('transaksi.laporan')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                                    Laporan
+                                </a>
                             @endif
 
 

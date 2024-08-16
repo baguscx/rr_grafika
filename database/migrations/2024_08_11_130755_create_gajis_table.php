@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('bagian');
             $table->string('gaji');
             $table->string('hadir');
-            $table->string('tidak_hadir');
             $table->string('total_gaji');
             $table->timestamps();
         });

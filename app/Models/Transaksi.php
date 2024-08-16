@@ -10,7 +10,9 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pemasukan',
-        'pengeluaran'
+        'nama_transaksi',
+        'total_transaksi',
+        'nominal_transaksi',
+        'jenis_transaksi'
     ];
 }

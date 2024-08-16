@@ -14,7 +14,6 @@ class Gaji extends Model
         'bagian',
         'gaji',
         'hadir',
-        'tidak_hadir',
         'total_gaji'
     ];
 }

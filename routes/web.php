@@ -2,6 +2,7 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\GajiController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,13 +11,18 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if(Auth::user()->hasRole('admin')){
+        return redirect()->route('admin.index');
+    }else{
+        return redirect()->route('owner.index');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/laporan', [Controllers\TransaksiController::class, 'laporan'])->name('transaksi.laporan');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -29,6 +35,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         'update' => 'admin.update',
         'destroy' => 'admin.destroy',
     ]);
+    Route::resource('/barang', Controllers\BarangController::class)->names([
+        'index' => 'barang.index',
+        'create' => 'barang.create',
+        'store' => 'barang.store',
+        'show' => 'barang.show',
+        'edit' => 'barang.edit',
+        'update' => 'barang.update',
+        'destroy' => 'barang.destroy',
+    ]);
     Route::resource('/transaksi', Controllers\TransaksiController::class)->names([
         'index' => 'transaksi.index',
         'create' => 'transaksi.create',
@@ -38,6 +53,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         'update' => 'transaksi.update',
         'destroy' => 'transaksi.destroy',
     ]);
+    Route::get('/pemasukan', [Controllers\TransaksiController::class, 'pemasukan'])->name('transaksi.pemasukan');
+    Route::get('/pemasukan/{id}', [Controllers\TransaksiController::class, 'barang'])->name('transaksi.barang');
+    Route::get('/pengeluaran', [Controllers\TransaksiController::class, 'pengeluaran'])->name('transaksi.pengeluaran');
+    Route::post('/pengeluaran', [Controllers\TransaksiController::class, 'storePengeluaran'])->name('transaksi.store.pengeluaran');
 });
 
 Route::middleware(['auth', 'role:owner'])->group(function () {
@@ -51,17 +70,8 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
         'update' => 'owner.update',
         'destroy' => 'owner.destroy',
     ]);
-    Route::resource('/stok', Controllers\StokController::class)->names([
-        'index' => 'stok.index',
-        'create' => 'stok.create',
-        'store' => 'stok.store',
-        'show' => 'stok.show',
-        'edit' => 'stok.edit',
-        'update' => 'stok.update',
-        'destroy' => 'stok.destroy',
-    ]);
-    Route::get('/gaji/karyawan', [Controllers\GajiController::class, 'karyawan'])->name('gaji.karyawan');
-    Route::get('/gaji/operator', [Controllers\GajiController::class, 'operator'])->name('gaji.operator');
+
+    Route::get('/gaji', [Controllers\GajiController::class, 'index'])->name('gaji');
     Route::post('/gaji', [Controllers\GajiController::class, 'store'])->name('gaji.store');
     Route::get('/gaji/{gaji}/edit', [Controllers\GajiController::class, 'edit'])->name('gaji.edit');
     Route::delete('/gaji/{gaji}', [Controllers\GajiController::class, 'destroy'])->name('gaji.destroy');

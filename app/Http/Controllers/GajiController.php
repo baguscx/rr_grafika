@@ -12,7 +12,8 @@ class GajiController extends Controller
      */
     public function index()
     {
-        //
+        $gajis = Gaji::latest()->get();
+        return view('gaji.index', compact('gajis'));
     }
 
     /**
@@ -33,7 +34,6 @@ class GajiController extends Controller
             'bagian' => 'required|string',
             'gaji' => 'required|min:0',
             'hadir' => 'required',
-            'tidak_hadir' => 'required',
         ]);
 
         Gaji::create([
@@ -41,16 +41,10 @@ class GajiController extends Controller
             'bagian' => $request->bagian,
             'gaji' => $request->gaji,
             'hadir' => $request->hadir,
-            'tidak_hadir' => $request->tidak_hadir,
             'total_gaji' => $request->hadir*$request->gaji,
         ]);
 
-        // Redirect berdasarkan bagian
-        if ($validatedData['bagian'] == 'operator') {
-            return redirect()->route('gaji.operator');
-        } elseif ($validatedData['bagian'] == 'karyawan') {
-            return redirect()->route('gaji.karyawan');
-        }
+        return back()->with('success', 'Berhasil Menambah Data');
     }
 
     /**
@@ -83,18 +77,7 @@ class GajiController extends Controller
     public function destroy(Gaji $gaji)
     {
         $gaji->delete();
-            return back();
+            return back()->with('success', 'Berhasil Menghapus Data');
     }
 
-    public function karyawan()
-    {
-        $gajis = Gaji::where('bagian', 'karyawan')->get();
-        return view('gaji.karyawan', compact('gajis'));
-    }
-
-    public function operator()
-    {
-        $gajis = Gaji::where('bagian', 'operator')->get();
-        return view('gaji.operator', compact('gajis'));
-    }
 }

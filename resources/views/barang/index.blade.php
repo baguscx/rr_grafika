@@ -4,12 +4,17 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Pemasukan</h1>
+                        <h1 class="mt-4">Barang</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">RR GRAFIKA</a></li>
-                            <li class="breadcrumb-item active">Pemasukan</li>
+                            <li class="breadcrumb-item active">Barang</li>
                         </ol>
                         <div class="card mb-4">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputbarang">
+                                    Input Barang
+                                </button>
+                            </div>
                             <!-- Input Modal -->
                             <div class="modal fade" id="inputbarang" tabindex="-1" role="dialog" aria-labelledby="inputbarangLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -25,12 +30,20 @@
                                             <div class="modal-body">
                                                 <!-- Add your input form here -->
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputPemasukan">Pemasukan</label>
-                                                    <input name="pemasukan" class="form-control py-4" id="inputPemasukan" type="number" placeholder="Input Pemasukan" />
+                                                    <label class="small mb-1" for="kodebarang">Kode Barang</label>
+                                                    <input name="kodebarang" class="form-control py-4" id="kodebarang" type="text" value="{{ 'GRFK' . '-' . rand() }}" readonly />
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputPengeluaran">Pengeluaran</label>
-                                                    <input name="pengeluaran" class="form-control py-4" id="inputPengeluaran" type="number" placeholder="Input Pengeluaran" />
+                                                    <label class="small mb-1" for="namabarang">Nama Barang</label>
+                                                    <input name="namabarang" class="form-control py-4" id="namabarang" type="text" placeholder="Input Nama Barang" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="small mb-1" for="hargabarang">Harga Barang</label>
+                                                    <input name="hargabarang" class="form-control py-4" id="hargabarang" type="number" placeholder="Input Harga Barang" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="small mb-1" for="stokbarang">Stok Barang</label>
+                                                    <input name="stokbarang" class="form-control py-4" id="stokbarang" type="number" placeholder="Input Stok Barang" />
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -45,7 +58,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                Tabel Transaksi
+                                Tabel barang
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -58,29 +71,19 @@
                                                 <th style="width: 20%">Stok</th>
                                                 <th style="width: 20%">Harga Satuan</th>
                                                 <th style="width: 20%">Total Harga</th>
-                                                <th style="width: 20%">Stok Aman</th>
+                                                <th style="width: 20%">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($barangs as $barang)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>
-                                                        <a class="color-primary" href="{{route('transaksi.barang', $barang->id)}}" style="text-decoration: none;">{{$barang->kode_barang}}</a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="color-primary" href="{{route('transaksi.barang', $barang->id)}}" style="text-decoration: none;">{{$barang->nama_barang}}</a>
-                                                    </td>
+                                                    <td>{{$barang->kode_barang}}</td>
+                                                    <td>{{$barang->nama_barang}}</td>
                                                     <td>{{$barang->stok_barang}}</td>
                                                     <td>Rp. {{ number_format($barang->harga_barang, 0, '.', ',') }}</td>
                                                     <td>Rp. {{number_format($barang->harga_barang*$barang->stok_barang, 0, '.', ',')}}</td>
-                                                    <td>
-                                                        @if($barang->stok_barang >= 5)
-                                                            <i class="fas fa-check-circle" style="color: green;"></i>
-                                                        @else
-                                                            <i class="fas fa-exclamation-triangle" style="color: red;"></i>
-                                                        @endif
-                                                    </td>
+                                                    <td><a class="color-primary" href="{{route('barang.edit', $barang->id)}}">Edit</a></td>
                                                 </tr>
                                             @empty
                                                 <tr>
