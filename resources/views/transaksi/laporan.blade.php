@@ -10,6 +10,34 @@
                             <li class="breadcrumb-item active">Laporan</li>
                         </ol>
                         <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Total Pemasukan</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Rp. {{ number_format($totalPemasukan, 0, ',', '.') }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Total Pengeluaran</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Rp. {{ number_format($totalPengeluaran, 0, ',', '.') }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Total Saldo</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Rp. {{ number_format($totalPemasukan-$totalPengeluaran, 0, ',', '.') }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Input Modal -->
                             <div class="modal fade" id="inputtransaksi" tabindex="-1" role="dialog" aria-labelledby="inputtransaksiLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

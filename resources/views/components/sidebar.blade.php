@@ -28,13 +28,13 @@
                                     Laporan
                                 </a>
                             @elseif(Auth::user()->hasRole('owner'))
-                                <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
+                                {{-- <a class="nav-link" href="{{Auth::user()->hasRole('admin') ? route('admin.index') : route('owner.index')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Dashboard
-                                </a>
+                                </a> --}}
                                 <div class="sb-sidenav-menu-heading">Menu Utama</div>
                                 <a class="nav-link" href="{{route('gaji')}}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-coins"></i></div>
                                     Penggajian
                                 </a>
                                 <a class="nav-link" href="{{route('transaksi.laporan')}}">

@@ -136,6 +136,8 @@ class TransaksiController extends Controller
 
     public function laporan(){
         $transaksis = Transaksi::latest()->get();
-        return view('transaksi.laporan', compact('transaksis'));
+        $totalPemasukan = Transaksi::where('jenis_transaksi', 'pemasukan')->sum('nominal_transaksi');
+        $totalPengeluaran = Transaksi::where('jenis_transaksi', 'pengeluaran')->sum('nominal_transaksi');
+        return view('transaksi.laporan', compact('transaksis', 'totalPemasukan', 'totalPengeluaran'));
     }
 }
